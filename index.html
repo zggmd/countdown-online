@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>春节放假倒计时</title>
+  <title>下班倒计时</title>
   <style>
     body {
         display: flex;
@@ -31,13 +31,13 @@
 <script>
   setInterval(() => {
     let start = moment(new Date());//获取开始时间
-    let end = moment('Sun Jan 30 2022 18:00:00 GMT+0800');//结束时间
+    let end = moment().endOf('date').subtract(6, 'hours');//结束时间
     let diff = end.diff(start);//时间差
     let time = `${moment.duration(diff).days()} 天 ${moment.duration(diff).hours()} 小时 ${moment.duration(diff).minutes()} 分 ${moment.duration(diff).seconds()} 秒`//格式化为需要的格式 这里是时分秒
     document.getElementById('container').innerText = time
   }, 1000)
 </script>
-<div class="title">春节放假倒计时</div>
+<div class="title">下班倒计时</div>
 <div id="container"></div>
 </body>
 <script>
@@ -223,7 +223,7 @@ z-index: 99999;
  <div class="ssz_deng">
   <div class="ssz_xian"></div>
   <div class="ssz_deng-a">
-   <div class="ssz_deng-b"><div class="ssz_deng-t" id="ssz_chun">春</div></div>
+   <div class="ssz_deng-b"><div class="ssz_deng-t" id="ssz_chun">元</div></div>
   </div>
   <div class="ssz_shui ssz_shui-a"><div class="ssz_shui-c"></div><div class="ssz_shui-b"></div></div>
  </div>
@@ -237,7 +237,7 @@ z-index: 99999;
  <div class="ssz_deng">
   <div class="ssz_xian"></div>
   <div class="ssz_deng-a">
-   <div class="ssz_deng-b"><div class="ssz_deng-t" id="ssz_jie">节</div></div>
+   <div class="ssz_deng-b"><div class="ssz_deng-t" id="ssz_jie">宵</div></div>
   </div>
   <div class="ssz_shui ssz_shui-a"><div class="ssz_shui-c"></div><div class="ssz_shui-b"></div></div>
  </div>
