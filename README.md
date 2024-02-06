@@ -12,4 +12,4 @@
 | time  | 截至时间, 格式为 YYYY-MM-DDTHH:mm:ss , 例如 2024-02-10T19:00:00 | 默认为当天的18:00 |
 
 举例:
-https://encode.zggmd.com/countdown-online?l1=国&l2=庆&title=国庆放假倒计时&time=2024-02-10T19:00:00
+https://encode.zggmd.com/countdown-online?l1=国&l2=庆&title=国庆放假倒计时&time=2024-10-01T00:00:00
