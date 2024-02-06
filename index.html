@@ -7,6 +7,9 @@
   <title>春节放假倒计时</title>
   <style>
     body {
+        background-color: Canvas !important;
+        color: CanvasText;
+        color-scheme: light dark;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -24,24 +27,22 @@
         color: darkcyan;
         margin-top: 40px;
     }
+    #from {
+        color: #a99e91;
+    }
   </style>
 </head>
 <body>
-<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script>
-  setInterval(() => {
-    let start = moment(new Date());//获取开始时间
-    let end = moment().endOf('date').subtract(6, 'hours');//结束时间
-    let diff = end.diff(start);//时间差
-    let time = `${moment.duration(diff).days()} 天 ${moment.duration(diff).hours()} 小时 ${moment.duration(diff).minutes()} 分 ${moment.duration(diff).seconds()} 秒`//格式化为需要的格式 这里是时分秒
-    document.getElementById('container').innerText = time
-  }, 1000)
-</script>
 <div class="title">春节放假倒计时</div>
+<div id="from"></div>
 <div id="container"></div>
 </body>
+<script src="public/js/dayjs/dayjs.js"></script>
+<script src="public/js/dayjs/duration.js"></script>
+<script src="public/js/dayjs/relativeTime.js"></script>
+<script src="public/js/dayjs/zh-cn.js"></script>
 <script>
-  (function(){
+  ;(function(){
     if(window.top !== window) return; // 在iframe中不渲染灯笼
     const style = document.createElement('style');
     style.innerHTML = `
@@ -267,6 +268,37 @@ z-index: 99999;
       }
     }
     
+  })()
+  ;(function () {
+    const {searchParams} = new URL(window.location)
+    const data = {
+      l1: '春',
+      l2: '节',
+      title: '春节放假倒计时',
+      time: '',
+    }
+    for (const [key, value] of searchParams.entries()) {
+      data[key] = value || data[key]
+    }
+
+    document.title = data.title
+    document.querySelector("body > div.title").innerText = data.title
+    document.querySelector("#ssz_chun").innerText = data.l1
+    document.querySelector("#ssz_jie").innerText = data.l2
+
+    dayjs.extend(window.dayjs_plugin_duration).extend(window.dayjs_plugin_relativeTime).locale('zh-cn')
+    setInterval(() => {
+      let start = dayjs();// now
+      let end = data.time ? dayjs(data.time) :  dayjs().set('hour', 18).set('minute', 0).set('second', 0).set('millisecond', 0);//结束时间
+      let duration = end.diff(start);//时间差
+      const mathType = duration > 0 ? 'floor': 'ceil'
+      const seconds = Math[mathType](duration / 1000) % 60;
+      const minutes = Math[mathType](duration / 1000 / 60) % 60;
+      const hours = Math[mathType](duration / 1000 / 60 / 60) % 24;
+      const days = Math[mathType](duration / 1000 / 60 / 60 / 24);
+      document.getElementById('from').innerText = `距 ${end.format('YYYY年MM月DD日 HH:mm:ss')} 还剩大约 ${dayjs.duration(duration).humanize()}`
+      document.getElementById('container').innerText = `${days} 天 ${hours} 小时 ${minutes} 分 ${seconds} 秒`
+    }, 1000)
   })()
 </script>
 </html>
